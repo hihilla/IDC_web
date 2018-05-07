@@ -1,73 +1,83 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
-    <title>My Ideas</title>
+  <link rel="stylesheet" type="text/css" href="styls.css">
+  <title>My Ideas</title>
 </head>
 
 <body>
+  <div id="titleDiv">
     <h1>I have an Idea!</h1>
-    <div>
-        <a href=#GET >Get All Ideas</a>
+      <ul>
+        <li><a href=#GET >Get All Ideas</a></li>
 
-        <a href=#PUT >Add New Idea</a>
+        <li><a href=#PUT >Add New Idea</a></li>
 
-        <a href=#DELETE >Delete an Idea</a>
+        <li><a href=#DELETE >Delete an Idea</a></li>
 
-        <a href=#POST >Update an Ideas</a>
+        <li><a href=#POST >Update an Idea</a></li>
+      </ul>
+  </div>
+  <hr>
 
-        <a href=#filename >Get File Name</a>
-    </div>
-    
-    <hr>
+  <div id="GET">
+    <h2>
+      Get All Ideas
+    </h2>
+    <button type="button" onclick="alert('GET all ideas!')">Get All Ideas!</button>
+  </div>
 
-    <div id="GET">
-        <h2>
-            Get All Ideas
-        </h2>
-    </div>
+  <hr>
 
-    <hr>
+  <div id="PUT">
+    <h2>
+      Add New Ideas
+    </h2>
 
-    <div id="PUT">
-        <h2>
-            Add New Ideas
-        </h2>
-        <form action="">
-          Your name:<br>
-          <input type="text" name="name" value="Edison">
-          <br>
-          Your ides:<br>
-          <input type="text" name="idea" value="Light bulb">
-          <br><br>
-          <input type="submit" value="Submit">
-        </form> 
-    </div>
+    <form action="">
+      Your name:<br>
+      <input type="text" name="name" value="Edison">
+      <br>
+      Your idea:<br>
+      <input type="text" name="idea" value="Light bulb">
+      <br><br>
+      <input id="submitButton" type="submit" value="Submit">
+    </form> 
+  </div>
 
-    <hr>
+  <hr>
 
-    <div id="DELETE">
-        <h2>
-            Delete an Ideas
-        </h2>
-    </div>
+  <div id="DELETE">
+    <h2>
+      Delete an Ideas
+    </h2>
 
-    <hr>
+    <form action="">
+      Idea ID:<br>
+      <input type="text" name="ideaId" value="###">
+      <br><br>
+      <input id="submitButton" type="submit" value="Submit">
+    </form> 
+  </div>
 
-    <div id="POST">
-        <h2>
-            Update an Ideas
-        </h2>
-    </div>
+  <hr>
 
-    <hr>
+  <div id="POST">
+    <h2>
+      Update an Ideas
+    </h2>
 
-    <div id="filename">
-        <h2>
-            Get File Name
-        </h2>
-    </div>
+    <form action="">
+      Idea ID:<br>
+      <input type="text" name="ideaId" value="###">
+      <br>
+      Your idea:<br>
+      <input type="text" name="idea" value="White light bulb">
+      <br><br>
+      <input id="submitButton" type="submit" value="Submit">
+    </form>
+  </div>
 
 </body>
 
