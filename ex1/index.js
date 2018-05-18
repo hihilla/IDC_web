@@ -44,38 +44,35 @@ var funcGet = function() {
 
 // /idea (PUT) - add new idea ( ideas is just a string) returns the idead’s id
 var funcPut = function(name, idea) {
-	let nameString = name.value
-	let ideaString = idea.value
+	console.log("HILLA:: " + name)
 	let id = getNextId()
 	console.log(id)
-	let newIdea = Idea(id, nameString, ideaString)
+	let newIdea = Idea(id, name, idea)
 	// TODO: add new idea to database
 	alert("New Idea added: " + newIdea.toString())
 }
 
 // /idea/<id> (DELETE) - delete an idea by it’s id (returns 0 if success, 1 otherwise)
 var funcDelete = function(ideaId) {
-	let id = ideaId.value
 	// TODO: delete idea from database and return the deleted idea, or null if no idea with thid id
-	let idea = deleteIdea(id)
+	let idea = null//deleteIdea(ideaId)
 	if (idea) {
 		alert("Deleted idea: " + idea.toString())
 	} else {
-		alert("Could not find idea with id " + id)
+		alert("Could not find idea with id " + ideaId)
 	}
 }
 
 // /idea/<id> (POST) - update an idea (string)  by it’s id
 var funcPost = function(ideaId, newIdea) {
-	let id = ideaId.value
-	let desc = newIdea.value
+	console.log("HILLa::" + ideaId + " " + newIdea)
 	// TODO: get the idea from database by id
-	var idea = getIdeaById(id)
+	var idea = null//getIdeaById(ideaId)
 	if (Idea) {
-		Idea.description = desc
-		alert("Updated idea: " + idea.toString())
+		// Idea.description = newIdea
+		alert("Updated idea: ")// + idea.toString())
 	} else {
-		alert("Could not find idea with id " + id + ", try creating a new idea")
+		alert("Could not find idea with id " + ideaId + ", try creating a new idea")
 	}
 }
 
