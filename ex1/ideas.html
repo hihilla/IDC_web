@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="styls.css">
+  <link rel="stylesheet" type="text/css" href="stylsheets/styls.css">
   <title>My Ideas</title>
 </head>
 
@@ -21,16 +21,16 @@
   </div>
   <hr>
 
-  <div id="GET">
+  <div>
     <h2>
       Get All Ideas
     </h2>
-    <button type="button" onclick="funcGet()">Get All Ideas!</button>
+    <button type="button" onclick="alert('GET all ideas!')">Get All Ideas!</button>
   </div>
 
   <hr>
 
-  <div id="PUT">
+  <div>
     <h2>
       Add New Ideas
     </h2>
@@ -42,33 +42,32 @@
       Your idea:<br>
       <input type="text" name="idea" value="Light bulb">
       <br><br>
-      <input id="submitButton" type="submit" value="Submit" onclick="funcPut(name, idea)">
+      <input id="submitButton" type="submit" value="Submit">
     </form> 
   </div>
 
   <hr>
 
-  <div id="DELETE">
+  <div>
     <h2>
       Delete an Ideas
     </h2>
-    <p>Checkout all ideas if you don't know your idea id</p>
+
     <form action="">
-      
       Idea ID:<br>
       <input type="text" name="ideaId" value="###">
       <br><br>
-      <input id="submitButton" type="submit" value="Submit" onclick="funcDelete(ideaId)">
+      <input id="submitButton" type="submit" value="Submit">
     </form> 
   </div>
 
   <hr>
 
-  <div id="POST">
+  <div>
     <h2>
       Update an Ideas
     </h2>
-    <p>Checkout all ideas if you don't know your idea id</p>
+
     <form action="">
       Idea ID:<br>
       <input type="text" name="ideaId" value="###">
@@ -76,7 +75,7 @@
       Your idea:<br>
       <input type="text" name="idea" value="White light bulb">
       <br><br>
-      <input id="submitButton" type="submit" value="Submit" onclick="funcPost(ideaId, idea)">
+      <input id="submitButton" type="submit" value="Submit">
     </form>
   </div>
 
