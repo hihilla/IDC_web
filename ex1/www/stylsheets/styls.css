@@ -52,7 +52,7 @@ body {
     margin-right: 20%;
 }
 
-button, #submitButton {
+button, #submitButton, #submitPut, #submitDelete, #submitPost {
     background-color: var(--primary);
     border: 1px solid var(--primary);
     color: var(--light);
@@ -60,7 +60,7 @@ button, #submitButton {
     padding: 10px;
 }
 
-button:hover, #submitButton:hover {
+button:hover, #submitButton:hover, #submitPut:hover, #submitDelete:hover, #submitPost:hover {
     background-color: var(--secondary);
     border: 1px solid var(--secondary);
     color: var(--primary);

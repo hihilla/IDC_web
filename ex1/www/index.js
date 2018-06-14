@@ -1,4 +1,5 @@
 const URL = 'http://localhost:8081';
+// let thirtyMin = 30 * 60 * 1000;
 
 // /ideas (GET) - returns all the ideas as an object whereas id(number) -> idea(string)
 function getAllIdeas() {
@@ -7,10 +8,10 @@ function getAllIdeas() {
     fetch(url, {method: 'GET'})
         .then((resp) => resp.json())
         .then(function (data) {
-            updatePage("")
-            table.textContent = ""
+            updatePage("");
+            table.textContent = "";
             if (data.length == 0) {
-                table.innerHTML = "No ideas in database yet..."
+                table.innerHTML = "No ideas in database yet...";
                 return
             }
             let tr = createNode('tr'),
@@ -18,7 +19,7 @@ function getAllIdeas() {
             td.innerHTML = `${"Ideas:"}`;
             append(tr, td);
             append(table, tr);
-            var i = 0
+            let i = 0;
             return data.map(function (idea) {
                 let tr = createNode('tr'),
                     span = createNode('td');
@@ -27,11 +28,11 @@ function getAllIdeas() {
                 append(table, tr);
             })
         })
-        .catch(error => errorHandler(error));
+        .catch(error => errorHandler(error))
 }
 
 // /idea (PUT) - add new idea ( ideas is just a string) returns the idead’s id
-var funcPut = function (author, idea) {
+let funcPut = function (author, idea) {
     const url = URL + '/idea';
     let data = {author: author, description: idea};
     fetch(url, {
@@ -46,11 +47,11 @@ var funcPut = function (author, idea) {
         .then(function (data) {
             updatePage("Added idea with id: " + data)
         })
-        .catch(error => (error));
-}
+        .catch(error => (error))
+};
 
 // /idea/<id> (DELETE) - delete an idea by it’s id (returns 0 if success, 1 otherwise)
-var funcDelete = function (ideaId) {
+let funcDelete = function (ideaId) {
     const url = URL + '/idea/' + ideaId;
 
     fetch(url, {
@@ -69,11 +70,11 @@ var funcDelete = function (ideaId) {
                 updatePage("Couldn't delete idea with id: " + ideaId)
             }
         })
-        .catch(error => errorHandler(error));
-}
+        .catch(error => errorHandler(error))
+};
 
 // /idea/<id> (POST) - update an idea (string)  by it’s id
-var funcPost = function (ideaId, newIdea) {
+let funcPost = function (ideaId, newIdea) {
     const url = URL + '/idea/' + ideaId;
     let data = {ideaId: ideaId, description: newIdea};
     fetch(url, {
@@ -88,9 +89,56 @@ var funcPost = function (ideaId, newIdea) {
         .then(function (data) {
             updatePage("Updated idea with id: " + data)
         })
-        .catch(error => errorHandler(error));
-}
+        .catch(error => errorHandler(error))
+};
 
+
+// Add a register screen whereas a user can register 
+// Must use the endpoint POST: /users/register where the HTTP body must be 
+// json in the form of {name:,user:,pass:}
+let funcRegister = function (fullname, username, pass) {
+    console.log("REGISTER");
+    const url = URL + '/users/register';
+    let data = {name: fullname, user: username, pass: pass};
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((resp) => resp.json())
+        .then(function (data) {
+            updatePage("Created new user: " + data)
+        })
+        .catch(error => (error))
+};
+
+// Add a login screen whereas a user can login
+// Must use the endpoint POST: /users/login where the HTTP body must be
+// json in the form of {user:,pass:}
+let funcLogin = function (username, pass) {
+    console.log("LOGIN");
+    const url = URL + '/users/login';
+    let data = {user: username, pass: pass};
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((resp) => resp.json())
+        .then(function (data) {
+            if (data == 1) {
+                // oh-oh, username is taken
+                updatePage("Oh ho, the username %s is already taken :(", username)
+            }
+        })
+        .catch(error => (error))
+};
 
 function createNode(element) {
     return document.createElement(element);
@@ -104,11 +152,46 @@ function updatePage(text) {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     const table = document.getElementById('ideas');
-    const updateTitle = document.getElementById('updateTitle')
-    updateTitle.textContent = text
+    const updateTitle = document.getElementById('updateTitle');
+    updateTitle.textContent = text;
     table.textContent = ""
 }
 
 function errorHandler(error) {
-    updatePage("en error has occured: " + error)
+    updatePage("en error has occurred: " + error)
 }
+
+// // usage: createCookie("website", "audero.it", new Date(new Date().getTime() + thirtyMin));
+// function createCookie(name, value, expires, path, domain) {
+//     let cookie = name + "=" + escape(value) + ";";
+//
+//     if (expires) {
+//         // If it's a date
+//         if(expires instanceof Date) {
+//             // If it isn't a valid date
+//             if (isNaN(expires.getTime()))
+//                 expires = new Date();
+//         }
+//         else
+//             expires = new Date(new Date().getTime() + parseInt(expires) * 1000 * 60 * 60 * 24);
+//
+//         cookie += "expires=" + expires.toGMTString() + ";";
+//     }
+//
+//     if (path)
+//         cookie += "path=" + path + ";";
+//     if (domain)
+//         cookie += "domain=" + domain + ";";
+//
+//     document.cookie = cookie;
+// }
+//
+// function getCookie(name) {
+//     let regexp = new RegExp("(?:^" + name + "|;\s*" + name + ")=(.*?)(?:;|$)", "g");
+//     let result = regexp.exec(document.cookie);
+//     return (result === null) ? null : result[1];
+// }
+//
+// function getUserNameFromCookie() {
+//     return getCookie('name');
+// }
