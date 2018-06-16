@@ -213,8 +213,8 @@ function encodeData() {
     let ideasJson = JSON.stringify(ideas);
     console.log(users)
 
-    let usersEnc = encodeURIComponent(usersJson);
-    let ideasEnc = encodeURIComponent(ideasJson);
+    // let usersEnc = encodeURIComponent(usersJson);
+    // let ideasEnc = encodeURIComponent(ideasJson);
 
     // save to computer
     // Asynchronous - Opening File
@@ -222,7 +222,7 @@ function encodeData() {
         if (err) {
             return console.error(err);
         }
-        fs.writeFile('data/users_data.txt', usersEnc, function (err) {
+        fs.writeFile('data/users_data.txt', usersJson, function (err) {
             if (err) {
                 return console.error(err);
             }
@@ -232,7 +232,7 @@ function encodeData() {
                 if (err) {
                     return console.error(err);
                 }
-                console.log("Asynchronous read: " + decodeURIComponent(data.toString()));
+                console.log("Asynchronous read: " + data);
             });
 
             fs.close(fd, function(err){
@@ -248,7 +248,7 @@ function encodeData() {
             return console.error(err);
         }
 
-        fs.writeFile('data/ideas_data.txt', ideasEnc, function (err) {
+        fs.writeFile('data/ideas_data.txt', ideasJson, function (err) {
             if (err) {
                 return console.error(err);
             }
@@ -272,8 +272,8 @@ function decodeData() {
             return console.error(err);
         }
         usersJson = data;
-        users = decodeURIComponent(usersJson)
-        console.log("Asynchronous read: " + users.toString());
+        // users = decodeURIComponent(usersJson)
+        console.log("Asynchronous read: " + usersJson.toString());
     });
 
     fs.readFile('data/ideas_data.txt', function (err, data) {
@@ -281,9 +281,12 @@ function decodeData() {
             return console.error(err);
         }
         ideasJson = data;
-        ideas = decodeURIComponent(ideasJson)
-        console.log("Asynchronous read: " + ideas.toString());
+        // ideas = decodeURIComponent(ideasJson)
+        console.log("Asynchronous read: " + ideasJson.toString());
     });
+
+    users = JSON.parse(usersJson);
+    ideas = JSON.parse(ideasJson);
 }
 
 
