@@ -16,13 +16,13 @@
 <div id="register">
     <form action="">
         Full name:<br>
-        <input type="text" name="fullname" value="Thomas Alva Edison">
+        <input type="text" name="fullname" value="Thomas Alva Edison" required>
         <br>
         Your username:<br>
-        <input type="text" name="username" value="EdisonTheTelegrapher">
+        <input type="text" name="username" value="EdisonTheTelegrapher" required>
         <br>
         Your password:<br>
-        <input type="password" name="password" value="">
+        <input type="password" name="password" value="" required>
         <br><br>
         <input id="submitButton" type="button" value="Submit" onclick="funcRegister(fullname.value, username.value, password.value)">
     </form>
