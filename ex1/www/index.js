@@ -5,7 +5,8 @@ const URL = 'http://localhost:8081';
 function getAllIdeas() {
     const table = document.getElementById('ideas');
     const url = URL + '/ideas';
-    fetch(url, {method: 'GET'})
+    fetch(url, {method: 'GET',
+        credentials: 'same-origin'})
         .then((resp) => resp.json())
         .then(function (data) {
             updatePage("");
@@ -38,6 +39,7 @@ let funcPut = function (author, idea) {
     fetch(url, {
         method: 'PUT',
         body: JSON.stringify(data),
+        credentials: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -57,6 +59,7 @@ let funcDelete = function (ideaId) {
     fetch(url, {
         method: 'DELETE',
         body: JSON.stringify({ideaId: ideaId}),
+        credentials: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -80,6 +83,7 @@ let funcPost = function (ideaId, newIdea) {
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
+        credentials: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -103,6 +107,7 @@ let funcRegister = function (fullname, username, pass) {
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
+        credentials: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -125,6 +130,7 @@ let funcLogin = function (username, pass) {
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
+        credentials: 'same-origin',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

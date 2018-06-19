@@ -112,10 +112,11 @@ app.post('/users/register', function (req, res) {
     // add new user to database
     users[user] = newUser;
 
-    ideas[user] = {};
+    // ideas[user] = {};
     encodeData();
 
-    sendCookie(res, user);
+    // sendCookie(res, user, req);
+    res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
     res.redirect(303, '/');
 });
 
@@ -130,10 +131,11 @@ app.post('/users/login', function (req, res) {
     } else {
         // the user should get redirected to the register page with a specific msg regarding the failure to login
         res.redirect(401, '/users/register');
+        return;
     }
 
     // If the user exist the response should redirect (30X HTTP Response) to the main ideas page of Ex1
-    sendCookie(res, user);
+    sendCookie(res, user, req);
     res.redirect(303, '/');
 
 });
@@ -141,7 +143,6 @@ app.post('/users/login', function (req, res) {
 
 /****/
 
-decodeData();
 let server = app.listen(8081, function () {
 
     let host = server.address().address;
@@ -181,29 +182,33 @@ function User(name, user, password) {
 
 
 function getUserFromCookie(req) {
-    let cookie = req.cookies;
-    console.log(cookie);
+    let username = req.cookies.username;
+    if (username == undefined) {
+        return null
+    }
 
     decodeData();
-    let user = User();// TODO get user from cookie
+    let user = users[username];
 
-    return null;
+    return user;
 }
 
-function sendCookie(res, username) {
+function sendCookie(res, username, req) {
     console.log("sending new cookie with username %s", username);
     // The user is in logged-in mode 30 minutes after calling any of the server dynamic endpoints
     // (i.e. not static pages or resources) Expires after 30 min from the time it is set.
-    res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
+    res.cookie(username, 'username', {expire: thirtyMin + Date.now()});
+    req.cookie(username, 'username', {expire: thirtyMin + Date.now()});
 }
 
 function handleCookies(req, res) {
     let user = getUserFromCookie(req);
     if (user == null) {
         res.redirect(401, '/users/register');
+        return;
     }
 
-    sendCookie(res, user.usernameInput);
+    sendCookie(res, user.username, req);
     return user;
 }
 
@@ -213,40 +218,40 @@ function encodeData() {
 
     // save to computer
     // Asynchronous - Opening File
-    fs.open('data/users_data.txt', 'r+', function(err, fd) {
-        if (err) {
-            return console.error(err);
-        }
+    // fs.open('data/users_data.txt', 'r+', function(err, fd) {
+    //     if (err) {
+    //         return console.error(err);
+    //     }
         fs.writeFile('data/users_data.txt', usersJson, function (err) {
             if (err) {
                 return console.error(err);
             }
 
-            fs.close(fd, function(err){
-                if (err){
-                    console.log(err);
-                }
-            });
+            // fs.close(fd, function(err){
+            //     if (err){
+            //         console.log(err);
+            //     }
+            // });
         });
-    });
+    // });
 
-    fs.open('data/ideas_data.txt', 'r+', function(err, fd) {
-        if (err) {
-            return console.error(err);
-        }
+    // fs.open('data/ideas_data.txt', 'r+', function(err, fd) {
+    //     if (err) {
+    //         return console.error(err);
+    //     }
 
         fs.writeFile('data/ideas_data.txt', ideasJson, function (err) {
             if (err) {
                 return console.error(err);
             }
 
-            fs.close(fd, function(err){
-                if (err){
-                    console.log(err);
-                }
-            });
+            // fs.close(fd, function(err){
+            //     if (err){
+            //         console.log(err);
+            //     }
+            // });
         });
-    });
+    // });
 }
 
 function decodeData() {
@@ -261,6 +266,7 @@ function decodeData() {
         }
         usersJson = data;
         if (usersJson !== "") {
+            console.log(usersJson);
             users = JSON.parse(usersJson);
         }
         console.log("Asynchronous read: " + users);
@@ -272,6 +278,7 @@ function decodeData() {
         }
         ideasJson = data;
         if (ideasJson !== "") {
+            console.log(ideasJson);
             ideas = JSON.parse(ideasJson);
         }
         console.log("Asynchronous read: " + ideas);
