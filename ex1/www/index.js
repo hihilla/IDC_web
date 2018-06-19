@@ -5,13 +5,17 @@ const URL = 'http://localhost:8081';
 function getAllIdeas() {
     const table = document.getElementById('ideas');
     const url = URL + '/ideas';
-    fetch(url, {method: 'GET',
-        credentials: 'same-origin'})
+    fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+    })
         .then((resp) => resp.json())
         .then(function (data) {
+            // data = JSOM.parse(data);
+            console.log(data);
             updatePage("");
             table.textContent = "";
-            if (data.length == 0) {
+            if (Object.keys(data).length == 0) {
                 table.innerHTML = "No ideas in database yet...";
                 return
             }
@@ -21,7 +25,9 @@ function getAllIdeas() {
             append(tr, td);
             append(table, tr);
             let i = 0;
-            return data.map(function (idea) {
+
+            return Object.keys(data).map(function (i) {
+                let idea = data[i];
                 let tr = createNode('tr'),
                     span = createNode('td');
                 span.innerHTML = `${i++} - ${idea.author}: ${idea.description}`;
@@ -114,7 +120,10 @@ let funcRegister = function (fullname, username, pass) {
         }
     })
         .then((resp) => resp.json())
-        .catch(error => (error))
+        .then(function (data) {
+            window.location.href = data
+        })
+        .catch(error => errorHandler(error))
 };
 
 // Add a login screen whereas a user can login
@@ -134,7 +143,10 @@ let funcLogin = function (username, pass) {
         }
     })
         .then((resp) => resp.json())
-        .catch(error => (error))
+        .then(function (data) {
+            window.location.href = data
+        })
+        .catch(error => errorHandler(error))
 };
 
 function createNode(element) {
