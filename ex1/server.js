@@ -1,12 +1,12 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
+let cookieParser = require('cookie-parser');
+let fs = require('fs');
+let thirtyMin = 30 * 60 * 1000;
+
 let ideas = {};
 let users = {};
-let cookieParser = require('cookie-parser');
-let thirtyMin = 30 * 60 * 1000;
-let fs = require('fs');
-
 
 app.use(express.static(__dirname + '/www'));
 app.use(bodyParser.json()); // support json encoded bodies
@@ -129,7 +129,7 @@ app.post('/users/login', function (req, res) {
         user = userObject.user;
     } else {
         // the user should get redirected to the register page with a specific msg regarding the failure to login
-        res.redirect(449, '/users/register');
+        res.redirect(401, '/users/register');
     }
 
     // If the user exist the response should redirect (30X HTTP Response) to the main ideas page of Ex1
@@ -190,8 +190,8 @@ function getUserFromCookie(req) {
     return null;
 }
 
-function sendCookie(res, user) {
-    console.log("sending new cookie with username %s", user);
+function sendCookie(res, username) {
+    console.log("sending new cookie with username %s", username);
     // The user is in logged-in mode 30 minutes after calling any of the server dynamic endpoints
     // (i.e. not static pages or resources) Expires after 30 min from the time it is set.
     res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
@@ -200,10 +200,10 @@ function sendCookie(res, user) {
 function handleCookies(req, res) {
     let user = getUserFromCookie(req);
     if (user == null) {
-        res.redirect(449, '/users/register');
+        res.redirect(401, '/users/register');
     }
 
-    sendCookie(res, user);
+    sendCookie(res, user.usernameInput);
     return user;
 }
 
@@ -221,14 +221,6 @@ function encodeData() {
             if (err) {
                 return console.error(err);
             }
-
-            console.log("Let's read newly written data");
-            fs.readFile('data/users_data.txt', function (err, data) {
-                if (err) {
-                    return console.error(err);
-                }
-                console.log("Asynchronous read: " + data);
-            });
 
             fs.close(fd, function(err){
                 if (err){
@@ -262,52 +254,26 @@ function decodeData() {
     let ideasJson;
 
     // Asynchronous read
-    fs.open('data/users_data.txt', 'r+', function(err, fd) {
+
+    fs.readFile('data/users_data.txt', function (err, data) {
         if (err) {
             return console.error(err);
         }
-
-        fs.readFile('data/users_data.txt', function (err, data) {
-            if (err) {
-                return console.error(err);
-            }
-            usersJson = data;
-            if (usersJson !== "") {
-                users = JSON.parse(usersJson);
-            }
-            console.log("Asynchronous read: " + users);
-
-            fs.close(fd, function(err){
-                if (err){
-                    console.log(err);
-                }
-            });
-        });
+        usersJson = data;
+        if (usersJson !== "") {
+            users = JSON.parse(usersJson);
+        }
+        console.log("Asynchronous read: " + users);
     });
 
-
-
-
-    fs.open('data/ideas_data.txt', 'r+', function(err, fd) {
+    fs.readFile('data/ideas_data.txt', function (err, data) {
         if (err) {
             return console.error(err);
         }
-
-        fs.readFile('data/ideas_data.txt', function (err, data) {
-            if (err) {
-                return console.error(err);
-            }
-            ideasJson = data;
-            if (ideasJson !== "") {
-                ideas = JSON.parse(ideasJson);
-            }
-            console.log("Asynchronous read: " + ideas);
-
-            fs.close(fd, function(err){
-                if (err){
-                    console.log(err);
-                }
-            });
-        });
+        ideasJson = data;
+        if (ideasJson !== "") {
+            ideas = JSON.parse(ideasJson);
+        }
+        console.log("Asynchronous read: " + ideas);
     });
 }
