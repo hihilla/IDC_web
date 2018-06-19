@@ -96,7 +96,7 @@ app.post('/users/register', function (req, res) {
     let name = req.body.name;
     let user = req.body.user;
     let pass = req.body.pass;
-    let userId = users.length;
+    // let userId = users.length;
     // look for user with same username
     decodeData();
     let userObject = users[user];
@@ -107,12 +107,12 @@ app.post('/users/register', function (req, res) {
         return
     }
 
-    let newUser = User(userId, name, user, pass);
+    let newUser = User(name, user, pass);
     console.log("new user! " + newUser.toString());
     // add new user to database
-    users[user] = newUser; // THIS DOESNT WORKKKK
+    users[user] = newUser;
 
-    ideas[user] = [];
+    ideas[user] = {};
     encodeData();
 
     sendCookie(res, user);
@@ -164,9 +164,8 @@ function Idea(author, desc) {
     return newIdea;
 }
 
-function User(userId, name, user, password) {
+function User(name, user, password) {
     let newUser = {
-        userId:     userId,
         name:       name,
         user:       user,
         password:   password,
@@ -211,10 +210,6 @@ function handleCookies(req, res) {
 function encodeData() {
     let usersJson = JSON.stringify(users);
     let ideasJson = JSON.stringify(ideas);
-    console.log(users)
-
-    // let usersEnc = encodeURIComponent(usersJson);
-    // let ideasEnc = encodeURIComponent(ideasJson);
 
     // save to computer
     // Asynchronous - Opening File
@@ -267,26 +262,52 @@ function decodeData() {
     let ideasJson;
 
     // Asynchronous read
-    fs.readFile('data/users_data.txt', function (err, data) {
+    fs.open('data/users_data.txt', 'r+', function(err, fd) {
         if (err) {
             return console.error(err);
         }
-        usersJson = data;
-        // users = decodeURIComponent(usersJson)
-        console.log("Asynchronous read: " + usersJson.toString());
+
+        fs.readFile('data/users_data.txt', function (err, data) {
+            if (err) {
+                return console.error(err);
+            }
+            usersJson = data;
+            if (usersJson !== "") {
+                users = JSON.parse(usersJson);
+            }
+            console.log("Asynchronous read: " + users);
+
+            fs.close(fd, function(err){
+                if (err){
+                    console.log(err);
+                }
+            });
+        });
     });
 
-    fs.readFile('data/ideas_data.txt', function (err, data) {
+
+
+
+    fs.open('data/ideas_data.txt', 'r+', function(err, fd) {
         if (err) {
             return console.error(err);
         }
-        ideasJson = data;
-        // ideas = decodeURIComponent(ideasJson)
-        console.log("Asynchronous read: " + ideasJson.toString());
-    });
 
-    users = JSON.parse(usersJson);
-    ideas = JSON.parse(ideasJson);
+        fs.readFile('data/ideas_data.txt', function (err, data) {
+            if (err) {
+                return console.error(err);
+            }
+            ideasJson = data;
+            if (ideasJson !== "") {
+                ideas = JSON.parse(ideasJson);
+            }
+            console.log("Asynchronous read: " + ideas);
+
+            fs.close(fd, function(err){
+                if (err){
+                    console.log(err);
+                }
+            });
+        });
+    });
 }
-
-
