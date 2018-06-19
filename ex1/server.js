@@ -130,7 +130,7 @@ app.post('/users/register', function (req, res) {
     if (userObject != null) {
         console.log("username exists");
         // we already have user with this username!!!
-        res.status(303);//.redirect('/users/login');
+        res.status(303);
         res.send(JSON.stringify('/users/login'));
         return;
     }
@@ -140,15 +140,12 @@ app.post('/users/register', function (req, res) {
     // add new user to database
     users[user] = newUser;
 
-    ideas[user] = {};
+    ideas[user] = [];
     encodeData();
 
     req.session.username = user;
-    // res.writeHead(303, {'Location': "http://" + req.headers['host'] +'/', 'Content-Type': 'text/html'});
     res.send(JSON.stringify('/'));
     return;
-    // res.setHeader('content-type', 'text/html');
-    // res.redirect('/');
 });
 
 // B
@@ -157,19 +154,18 @@ app.post('/users/login', function (req, res) {
     let pass = req.body.pass;
     // find user with username
     let userObject = users[user];
-    if (userObject!== undefined && pass === userObject.pass) {
+    if (userObject!== undefined && pass === userObject.password) {
         user = userObject.user;
     } else {
         // the user should get redirected to the register page with a specific msg regarding the failure to login
         res.send(JSON.stringify('/users/register'));
-        res.status(303);//.redirect('/users/register');
+        res.status(303);
         return;
     }
 
     // If the user exist the response should redirect (30X HTTP Response) to the main ideas page of Ex1
     req.session.username = user;
-    // res.writeHead(303, {'Location': '/'});
-    res.status(303).redirect('/');
+    res.status(303);
     res.send(JSON.stringify('/'));
 });
 
@@ -212,37 +208,6 @@ function User(name, user, password) {
 
     return newUser;
 }
-
-
-// function getUserFromCookie(req) {
-//     let username = req.cookies.username;
-//     if (username == undefined) {
-//         return null
-//     }
-//
-//     decodeData();
-//     let user = users[username];
-//
-//     return user;
-// }
-
-// function handleCookies(req, res) {
-//     let username = req.cookies.username;
-//     if (username == undefined) {
-//         res.status(403).render();
-//         return;
-//     }
-
-
-    // let user = getUserFromCookie(req);
-    // if (user == null) {
-    //     res.redirect(401, '/users/register');
-    //     return;
-    // }
-    //
-    // res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
-    // return user;
-// }
 
 function encodeData() {
     let usersJson = JSON.stringify(users);

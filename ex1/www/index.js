@@ -11,11 +11,9 @@ function getAllIdeas() {
     })
         .then((resp) => resp.json())
         .then(function (data) {
-            // data = JSOM.parse(data);
-            console.log(data);
             updatePage("");
             table.textContent = "";
-            if (Object.keys(data).length == 0) {
+            if (Object.keys(data).length === 0) {
                 table.innerHTML = "No ideas in database yet...";
                 return
             }
@@ -73,7 +71,8 @@ let funcDelete = function (ideaId) {
     })
         .then((resp) => resp.json())
         .then(function (data) {
-            if (data == 0) {
+            console.log("data: " + data);
+            if (Object.keys(data).length === 0) {
                 updatePage("Deleted idea with id: " + ideaId)
             } else {
                 updatePage("Couldn't delete idea with id: " + ideaId)
