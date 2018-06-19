@@ -114,9 +114,6 @@ let funcRegister = function (fullname, username, pass) {
         }
     })
         .then((resp) => resp.json())
-        // .then(function (data) {
-        //     updatePage("Created new user: " + data)
-        // })
         .catch(error => (error))
 };
 
@@ -137,12 +134,6 @@ let funcLogin = function (username, pass) {
         }
     })
         .then((resp) => resp.json())
-        .then(function (data) {
-            if (data == 1) {
-                // oh-oh, username is taken
-                updatePage("Oh ho, the username %s is already taken :(", username)
-            }
-        })
         .catch(error => (error))
 };
 

@@ -115,7 +115,6 @@ app.post('/users/register', function (req, res) {
     // ideas[user] = {};
     encodeData();
 
-    // sendCookie(res, user, req);
     res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
     res.redirect(303, '/');
 });
@@ -135,7 +134,7 @@ app.post('/users/login', function (req, res) {
     }
 
     // If the user exist the response should redirect (30X HTTP Response) to the main ideas page of Ex1
-    sendCookie(res, user, req);
+    res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
     res.redirect(303, '/');
 
 });
@@ -193,14 +192,6 @@ function getUserFromCookie(req) {
     return user;
 }
 
-function sendCookie(res, username, req) {
-    console.log("sending new cookie with username %s", username);
-    // The user is in logged-in mode 30 minutes after calling any of the server dynamic endpoints
-    // (i.e. not static pages or resources) Expires after 30 min from the time it is set.
-    res.cookie(username, 'username', {expire: thirtyMin + Date.now()});
-    req.cookie(username, 'username', {expire: thirtyMin + Date.now()});
-}
-
 function handleCookies(req, res) {
     let user = getUserFromCookie(req);
     if (user == null) {
@@ -208,7 +199,7 @@ function handleCookies(req, res) {
         return;
     }
 
-    sendCookie(res, user.username, req);
+    res.cookie(user, 'username', {expire: thirtyMin + Date.now()});
     return user;
 }
 
