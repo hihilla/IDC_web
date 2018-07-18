@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>IDC IDEAS</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/static/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/static/stylesheets/style.css">
+
+  <style>
+
+  </style>
+</head>
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/jquery.js"></s' + 'cript>')</script>
+<script src="/static/javascripts/bootstrap.js"></script>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <img src='/static/images/logo.png' class="logo" alt="IDC Idas"/>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">IDC Ideas!</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="/users/login">Login<span class="sr-only">(current)</span></a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<div class="container">
+
+    <div class="panel panel-info" style="text-align: center; width:250px; margin: 25px auto 0 auto;">
+        <div class="panel-heading">
+            <h2 class="panel-title">IDC Ideas Login:</h2>
+        </div>
+        <div id="errorMessage" class="alert alert-danger hide" style="margin-bottom:0px">
+            Invalid username/password
+        </div>
+
+        <form method="POST" action="/users/login" style="margin: 0px">
+            <div class="panel-content" style="padding: 5px">
+                <div class='form-group'>
+                    <label>Username:</label>
+                    <div class='input-group'>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" class="form-control" name="user"/>
+                    </div>
+                </div>
+                <div class='form-group' style="margin-bottom:0px">
+                    <label>Password:</label>
+                    <div class='input-group'>
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" name="pass"/><br/>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input type="submit" class="btn btn-primary" value="Sign in!"/>
+                <a class="btn btn-default btn-success" href="/users/register" role="button">Register</a>
+            </div>
+        </form>
+    </div>
+
+</div> <!-- /container -->
+
+
+<script src="/static/javascripts/login.js"></script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+</body>
+</html>

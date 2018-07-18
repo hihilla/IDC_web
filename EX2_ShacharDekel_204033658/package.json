@@ -1,0 +1,20 @@
+{
+  "name": "ex1-new",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "morgan": "~1.9.0",
+    "query-string": "^6.1.0",
+    "sha1": "^1.1.1",
+    "sqlite-sync": "^0.3.8",
+    "sqlite3": "^4.0.0",
+    "sqlite3-promise": "^1.0.3"
+  }
+}

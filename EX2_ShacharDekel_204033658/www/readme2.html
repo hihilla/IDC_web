@@ -1,0 +1,20 @@
+<html>
+Shachar Dekel 204033658		<br>
+<hr>
+The app is pretty straight forward, the main page is the IDEAS page but you can't access it without being in logged in mode. so any attempt to call the main page will redirect you to the login page
+until you log-in.
+In the login page you can write your username/password in order to login or decide to click the register button to transfer yourself to the register page
+once you've registered it will automatically log you in.
+I've used Sqlite3 in order to persist my data - Although it said I didn't have to in this assignment I did make the data save synchronious (since I think its important to show the users valid data and transaction it)
+I've also hashed the password before storing them in the DB just cause I hate when ppl are not hashing/salting passwords (it drives me nuts)
+
+For the user management I've used session (that obv uses cookies -> set those to max age of 30min)
+
+Also on the ideas API if the user is not connected I have returned a Unauthorized HTTP error (403) just cause I think it's more accurate for API requests (those are not pages and are usually requested via Ajax or
+a script - therefore the redirect and then rendering of the login page for an ajax request just doesn't really make sense)
+<hr>
+What was challenging? getting used to Node's async agenda. - and then finally making the requests sync too.
+<hr>
+What was fun? ehhh writing this readme2 document :P
+
+</html>

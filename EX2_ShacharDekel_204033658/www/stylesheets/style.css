@@ -1,0 +1,18 @@
+body {
+  padding-top: 70px;
+}
+
+.logo{
+  position: absolute;
+  margin-top: 5px;
+  height: 40px;
+  margin-left: -40px
+}
+
+.operation-column{
+  width: 100px;
+}
+
+.id-column{
+  width: 40px;
+}
