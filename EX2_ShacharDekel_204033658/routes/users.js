@@ -55,5 +55,25 @@ router.get('/logout', function(req, res){
     res.end();
 });
 
+router.get('/profile', function(req, res) {
+    if(!req.session.userId){
+        // If the user is not logged in - redirect to login page
+        res.writeHead(302, {'Location': '/users/login'});
+        res.end();
+        return;
+    }
+    res.sendFile(path.join(__dirname,'../www/profile.html'));
+});
+
+
+router.get('/problemChamber', function(req, res, next) {
+    if(!req.session.userId){
+        // If the user is not logged in - redirect to login page
+        res.writeHead(302, {'Location': '/users/login'});
+        res.end();
+        return;
+    }
+    res.sendFile(path.join(__dirname,'../www/problemChamber.html'));
+});
 
 module.exports = router;

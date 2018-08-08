@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>IDC IDEAS</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/static/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/static/stylesheets/style.css">
+
+  <style>
+
+  </style>
+</head>
+
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/jquery.js"></s' + 'cript>')</script>
+<script src="/static/javascripts/bootstrap.js"></script>
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <img src='/static/images/logo.png' class="logo" alt="IDC Idas"/>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">IDC Ideas!</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="/users/problemChamber">Problem Chamber <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="/users/messages">Messages <span class="sr-only">(current)</span></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li class="active"><a href="/users/logout">Logout <span class="sr-only">(current)</span></a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+<!-- users details -->
+<div class="container">
+    <div class="userMessage"></div>
+    <div class="row">
+        <div class="col-sm-4" id="nameBody">
+            <h3>Name:</h3>
+        </div>
+        <div class="col-sm-4" id="ratingBody">
+            <h3>Rating:</h3>
+        </div>
+        <div class="col-sm-4 blockquote-reverse">
+            <button class="btn btn-primary btn-lg" id="sendMessageButton" onclick="OnClickSendPrivateMessageButton()">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true">
+            </span>
+                Send Private Message
+            </button>
+        </div>
+    </div>
+</div>
+
+<br><hr><br>
+
+<!-- badges table -->
+<div class="container">
+  <div class="stories">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th class="id-column">#</th>
+        <th>BADGES</th>
+      </tr>
+      </thead>
+      <tbody id="badgesTableBody">
+      </tbody>
+    </table>
+  </div>
+</div> <!-- /container -->
+
+<br><hr><br>
+
+<!-- open problems table -->
+<div class="container">
+    <div class="stories">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="id-column">#</th>
+                <th>OPEN PROBLEMS</th>
+                <th>Ideas Count</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th class="operation-column">OPERATIONS</th>
+            </tr>
+            </thead>
+            <tbody id="openProblemsTableBody">
+            </tbody>
+        </table>
+        <!--<button class="btn btn-primary btn-lg" id="addProblemButton"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Problem</button>-->
+    </div>
+
+</div> <!-- /container -->
+
+<!--<div class="modal fade" id="newProblemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+    <!--<div class="modal-dialog" role="document">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                <!--<h4 class="modal-title" id="myModalLabelProblem">Add a new idea:</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<form action="javascript:submitProblemForm();">-->
+                    <!--<div class='form-group'>-->
+                        <!--<label>Story:</label>-->
+                        <!--<input class='form-control' type="text" name="problem" id="problem" required>-->
+                    <!--</div>-->
+                    <!--<input type="hidden" name="problemId" id="problemId">-->
+                    <!--<div class='form-group'>-->
+                        <!--<input class='btn btn-success' type="submit" value="Submit" name="submit"/>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<br><hr><br>
+
+<!-- ideas table -->
+<div class="container">
+    <div class="stories">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="id-column">#</th>
+                <th>IDEA</th>
+                <th class="operation-column">OPERATIONS</th>
+            </tr>
+            </thead>
+            <tbody id="ideasTableBody">
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-lg" id="addIdeaButton"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Idea</button>
+    </div>
+
+</div> <!-- /container -->
+
+<div class="modal fade" id="newIdeaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add a new idea:</h4>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:submitForm();">
+                    <div class='form-group'>
+                        <label>Story:</label>
+                        <input class='form-control' type="text" name="idea" id="idea" required>
+                    </div>
+                    <input type="hidden" name="ideaId" id="ideaId">
+                    <div class='form-group'>
+                        <input class='btn btn-success' type="submit" value="Submit"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- message modal -->
+<div class="modal fade" id="newMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabelMessage">Add a new idea:</h4>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:submitMessageForm();">
+                    <div class='form-group'>
+                        <label>To:</label>
+                        <input class='form-control' type="text" name="username" id="username" required>
+                    </div>
+                    <div class='form-group'>
+                        <label>Message:</label>
+                        <input class='form-control' type="text" name="message" id="message" required>
+                    </div>
+                    <div class='form-group'>
+                        <input class='btn btn-success' type="submit" value="Submit" name="submit"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/javascripts/common.js"></script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+</body>
+</html>
