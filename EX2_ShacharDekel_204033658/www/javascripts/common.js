@@ -1,36 +1,39 @@
 let timeout;
 $(function(){
     getAllIdeas();
-    $('#addIdeaButton').click(OnClickAddIdeaButton);
-    $('#addProblemButton').click(OnClickAddProblemButton);
+    commonGetAllProblems();
+    // $('#addIdeaButton').click(OnClickAddIdeaButton);
+    // $('#addProblemButton').click(OnClickAddProblemButton);
     getUserDetails();
 });
 
-function getAllIdeas(){
+function getAllIdeas() {
     fetch('/ideas', {credentials: "same-origin"})
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (ideas) {
+            clearIdeasTable();
+            ideas.forEach(function (idea) {
+                appendIdea(idea);
+            });
+        });
+}
+function commonGetAllProblems(){
+    // m_problems.forEach(function(problem){
+    //     appendProblem(problem);
+    // });
+
+    fetch('/ideas', {credentials: "same-origin"}) // TODO: endpoint
         .then(function(response) {
             return response.json();
         })
-        .then(function(ideas) {
-            clearIdeasTable();
-            ideas.forEach(function(idea){
-                appendIdea(idea);
-			});
+        .then(function(problems) {
+            clearProblemsTable();
+            problems.forEach(function(problem){
+                appendProblem(problem);
+            });
         });
-function getAllProblems(){
-    m_problems.forEach(function(problem){
-        appendProblem(problem);
-    });
-    // fetch('/ideas', {credentials: "same-origin"}) // TODO: endpoint
-    //     .then(function(response) {
-    //         return response.json();
-    //     })
-    //     .then(function(problems) {
-    //         clearProblemsTable();
-    //         m_problems.forEach(function(problem){
-    //             appendProblem(problem);
-    //         });
-    //     });
 }
 
 function appendIdea(idea){
@@ -53,6 +56,9 @@ function appendProblem(problem){
     let row= $('<tr></tr>').attr('id', 'row' + problem.id);
     row.append($('<td></td>').text(problem.id).addClass('font-weight-bold'));
     row.append($('<td></td>').attr('id','problemText' + problem.id).text(problem.idea));
+    row.append($('<td></td>').attr('id','problemText' + problem.id).text(problem.idea)); // ideas count
+    row.append($('<td></td>').attr('id','problemText' + problem.id).text(problem.idea)); // date
+    row.append($('<td></td>').attr('id','problemText' + problem.id).text(problem.idea)); // status
     row.append($('<td></td>').append(
         $('<a></a>').addClass('btn btn-default delete').data('id', problem.id).click(deleteProblem).append(//TODO
             $('<span></span>').addClass('glyphicon glyphicon-trash').attr('aria-hidden', 'true')
@@ -100,26 +106,28 @@ function deleteProblem(){
 }
 
 function submitForm(){
-	let ideaId = $('#ideaId').val();
-	let ideaText = $('#idea').val();
-	if (ideaId === ""){
-        appendIdea({id: m_ideas.length, idea: ideaText});
-        // // New Idea:
-        // fetch('/idea' , {method: 'PUT', body: ideaText, credentials: "same-origin"})
-        //     .then(function(response) {
-        //         console.log(response.status);
-        //         return response.text();
-        //     })
-        //     .then(function(response){
-        //         $('#newIdeaModal').modal('hide');
-        //     	if(isNaN(response)){
-        //             console.log("response is nan");
-        //             alertMessage("An error has occurred while trying to add a new story", 'danger');
-        //     		return;
-			// 	}
-        //         appendIdea({id: response, idea: ideaText});
-        //     });
-	}
+    let ideaId = $('#ideaId').val();
+    let ideaText = $('#idea').val();
+    if (ideaId === "") {
+        //    appendIdea({id: m_ideas.length, idea: ideaText});
+
+
+        // New Idea:
+        fetch('/idea', {method: 'PUT', body: ideaText, credentials: "same-origin"})
+            .then(function (response) {
+                console.log(response.status);
+                return response.text();
+            })
+            .then(function (response) {
+                $('#newIdeaModal').modal('hide');
+                if (isNaN(response)) {
+                    console.log("response is nan");
+                    alertMessage("An error has occurred while trying to add a new story", 'danger');
+                    return;
+                }
+                appendIdea({id: response, idea: ideaText});
+            });
+    }
 	else{
 		// Editing existing idea:
         fetch('/idea/' + ideaId , {method: 'POST', body: ideaText, credentials: "same-origin"})
@@ -145,20 +153,21 @@ function submitProblemForm(){
     let problemText = $('#problem').val();
     if (problemId == ""){
         // New problem:
-        appendProblem({id: m_problems.length, idea: problemText});
-        // fetch('/idea' , {method: 'PUT', body: problemText, credentials: "same-origin"}) // TODO: endpoint
-        //     .then(function(response) {
-        //         return response.text();
-        //     })
-        //     .then(function(response){
-        //         $('#newProblemModal').modal('hide');
-        //         if(isNaN(response)){
-        //             alertMessage("An error has occurred while trying to add a new story", 'danger');
-        //             return;
-        //         }
-        //         appendProblem({id: response, idea: problemText});
-        //
-        //     });
+        // appendProblem({id: m_problems.length, idea: problemText});
+
+        fetch('/idea' , {method: 'PUT', body: problemText, credentials: "same-origin"}) // TODO: endpoint
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(response){
+                $('#newProblemModal').modal('hide');
+                if(isNaN(response)){
+                    alertMessage("An error has occurred while trying to add a new story", 'danger');
+                    return;
+                }
+                appendProblem({id: response, idea: problemText});
+
+            });
     }
     else{
         // Editing existing problem:

@@ -23,7 +23,7 @@ router.put("/setAsRead", function(req, res){
         return;
     }
     let newIdea = req.body;
-  let newId = dal.addIdea(newIdea, userId);
+  let newId = dal.addPersonalIdea(newIdea, userId);
   res.send(newId.toString());
 });
 
