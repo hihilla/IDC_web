@@ -321,3 +321,51 @@ function appendOpenProblem(problem){
 function answerProblem() {
     // todo
 }
+
+// ####################### Problem page #######################
+
+function OnClickProposeIdeaButton(){
+    $('#proposeIdeaModalLabel').text("Propose an idea:");
+    $('form')[0].reset();
+    $('#ideaId').val('');
+    $('#proposeIdeaModal').modal('show');
+}
+
+function submitProposeIdeaForm() {
+    let ideaId = $('#ideaId').val();
+    let ideaText = $('#idea').val();
+    if (ideaId === "") {
+        // New Idea:
+        fetch('/idea', {method: 'PUT', body: ideaText, credentials: "same-origin"})
+            .then(function (response) {
+                console.log(response.status);
+                return response.text();
+            })
+            .then(function (response) {
+                $('#proposeIdeaModal').modal('hide');
+                if (isNaN(response)) {
+                    console.log("response is nan");
+                    alertMessage("An error has occurred while trying to add a new story", 'danger');
+                    return;
+                }
+                appendIdea({id: response, idea: ideaText});
+            });
+    }
+    else{
+        // Editing existing idea:
+        fetch('/idea/' + ideaId , {method: 'POST', body: ideaText, credentials: "same-origin"})
+            .then(function(response) {
+                console.log(response.text());
+                return response.text();
+            })
+            .then(function(response){
+                $('#proposeIdeaModal').modal('hide');
+                if(response === "0"){
+                    alertMessage("An error has occurred while trying to edit the story", 'danger');
+                    return;
+                }
+                $('#ideaText' + ideaId).text(ideaText);
+                alertMessage("The Idea was successfully edited!", "success");
+            });
+    }
+}
