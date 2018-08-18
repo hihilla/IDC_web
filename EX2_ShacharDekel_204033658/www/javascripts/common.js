@@ -2,9 +2,9 @@ let timeout;
 $(function(){
     getAllIdeas();
     commonGetAllProblems();
-    // $('#addIdeaButton').click(OnClickAddIdeaButton);
-    // $('#addProblemButton').click(OnClickAddProblemButton);
+
     getUserDetails();
+    getAllNotifications();
 });
 
 function getAllIdeas() {
@@ -19,11 +19,8 @@ function getAllIdeas() {
             });
         });
 }
-function commonGetAllProblems(){
-    // m_problems.forEach(function(problem){
-    //     appendProblem(problem);
-    // });
 
+function commonGetAllProblems(){
     fetch('/problems', {credentials: "same-origin"}) // TODO: endpoint
         .then(function(response) {
             return response.json();
@@ -109,9 +106,6 @@ function submitForm(){
     let ideaId = $('#ideaId').val();
     let ideaText = $('#idea').val();
     if (ideaId === "") {
-        //    appendIdea({id: m_ideas.length, idea: ideaText});
-
-
         // New Idea:
         fetch('/idea', {method: 'PUT', body: ideaText, credentials: "same-origin"})
             .then(function (response) {
@@ -153,8 +147,6 @@ function submitProblemForm(){
     let problemText = $('#problem').val();
     if (problemId == ""){
         // New problem:
-        // appendProblem({id: m_problems.length, idea: problemText});
-
         fetch('/problem' , {method: 'PUT', body: problemText, credentials: "same-origin"}) // TODO: endpoint
             .then(function(response) {
                 return response.text();
@@ -185,7 +177,6 @@ function submitProblemForm(){
                 alertMessage("The Problem was successfully edited!", "success");
             });
     }
-
 }
 
 function editIdea(){
@@ -203,7 +194,6 @@ function editProblem(){
     $('#myModalLabelProblem').text("Edit problem:");
     $('#newProblemModal').modal('show');
 }
-
 
 function OnClickAddIdeaButton(){
     $('#myModalLabel').text("Add a new idea:");
@@ -238,7 +228,7 @@ function alertMessage(message, classer){
 	}, 5000);
 }
 
-// Profile page
+// ####################### Profile page #######################
 
 function OnClickSendPrivateMessageButton(){
     $('#myModalLabelMessage').text("Send a private message:");
@@ -283,24 +273,24 @@ function getUserDetails(){
     //     });
 }
 
-function getAllBadges(){
-    // fetch('/badges', {credentials: "same-origin"}) // TODO: endpoint
+function getAllNotifications(){
+    // fetch('/notifications', {credentials: "same-origin"}) // TODO: endpoint
     //     .then(function(response) {
     //         return response.json();
     //     })
-    //     .then(function(problems) {
+    //     .then(function(notifications) {
     //         clearProblemsTable();
-    //         m_problems.forEach(function(problem){
-    //             appendProblem(problem);
+    //         notifications.forEach(function(notif){
+    //             appendNotification(notif);
     //         });
     //     });
 }
 
-function appendBadge(badge){
-    let row= $('<tr></tr>').attr('id', 'row' + badge.id);
-    row.append($('<td></td>').text(badge.id).addClass('font-weight-bold'));
-    row.append($('<td></td>').attr('id','badgeText' + badge.id).text(badge.text));
-    $("#badgesTableBody").append(row);
+function appendNotification(notification){
+    let row= $('<tr></tr>').attr('id', 'row' + notification.id);
+    row.append($('<td></td>').text(notification.id).addClass('font-weight-bold'));
+    row.append($('<td></td>').attr('id','notificationText' + notification.id).text(notification.text));
+    $("#notificationsTableBody").append(row);
 }
 
 function getAllOpenProblems(){
@@ -310,7 +300,7 @@ function getAllOpenProblems(){
     //     })
     //     .then(function(problems) {
     //         clearProblemsTable();
-    //         m_problems.forEach(function(problem){
+    //         problems.forEach(function(problem){
     //             appendProblem(problem);
     //         });
     //     });
