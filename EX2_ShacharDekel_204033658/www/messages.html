@@ -46,7 +46,7 @@
   </div>
 </nav>
 
-<!-- problems table -->
+<!-- messages table -->
 <div class="container">
     <div class="userMessage"></div>
     <div class="stories">
@@ -65,16 +65,51 @@
             </tbody>
         </table>
     </div>
+    <button class="btn btn-primary btn-lg" id="sendMessageButton" onclick="OnClickSendPrivateMessageButton()">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true">
+            </span>
+        Send Private Message
+    </button>
 
 </div> <!-- /container -->
 
+<!-- message modal -->
 <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabelMEssage">Message:</h4>
+                <h4 class="modal-title">Message:</h4>
                 <p class="modal-body" id="myModalMessageBody"></p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- new message modal -->
+<div class="modal fade" id="newMessageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabelMessage">Add a new idea:</h4>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:submitMessageForm();">
+                    <div class='form-group'>
+                        <label>To:</label>
+                        <input class='form-control' type="text" name="username" id="username" required>
+                    </div>
+                    <div class='form-group'>
+                        <label>Message:</label>
+                        <input class='form-control' type="text" name="message" id="message" required>
+                    </div>
+                    <div class='form-group'>
+                        <input class='btn btn-success' type="submit" value="Submit" name="submit"/>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
             </div>

@@ -279,11 +279,15 @@ function getAllNotifications(){
     //         return response.json();
     //     })
     //     .then(function(notifications) {
-    //         clearProblemsTable();
+    //         clearNotificationsTable();
     //         notifications.forEach(function(notif){
     //             appendNotification(notif);
     //         });
     //     });
+}
+
+function clearNotificationsTable(){
+    $("#notificationsTableBody").empty();
 }
 
 function appendNotification(notification){
@@ -299,11 +303,15 @@ function getAllOpenProblems(){
     //         return response.json();
     //     })
     //     .then(function(problems) {
-    //         clearProblemsTable();
+    //         clearOpenProblemsTable();
     //         problems.forEach(function(problem){
     //             appendProblem(problem);
     //         });
     //     });
+}
+
+function clearOpenProblemsTable(){
+    $("#openProblemsTableBody").empty();
 }
 
 function appendOpenProblem(problem){
@@ -368,4 +376,42 @@ function submitProposeIdeaForm() {
                 alertMessage("The Idea was successfully edited!", "success");
             });
     }
-}
+}
+
+// ####################### Messages page #######################
+
+function clearMessagesTable(){
+    $("#messagesTableBody").empty();
+}
+
+function getAllMessages(){
+    fetch('/messages', {credentials: "same-origin"}) // TODO: endpoint
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(messages) {
+            clearMessagesTable();
+            messages.forEach(function(message){
+                appendMessage(message);
+            });
+        });
+}
+
+function appendMessage(message){
+    let row= $('<tr></tr>').attr('id', 'row' + message.id);
+    row.append($('<td></td>').text(message.id).addClass('font-weight-bold'));
+    row.append($('<td></td>').attr('id','messageText' + message.id).text(message.idea));
+    row.append($('<td></td>').append(
+        $('<a></a>').addClass('btn btn-default').data('id', message.id).click(OnClickSendPrivateMessageButton).append(
+            $('<span></span>').addClass('glyphicon glyphicon-notes-2').attr('aria-hidden', 'true')
+        )
+    ));
+    row.onclick = onClickMessage(message.id);
+    $("#openProblemsTableBody").append(row);
+}
+
+function onClickMessage(messageId) {
+    $('#myModalMessageBody').text("Send a private message: " + messageId); // todo
+    $('form')[0].reset();
+    $('#messageModal').modal('show');
+}
