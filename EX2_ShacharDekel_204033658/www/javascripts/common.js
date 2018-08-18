@@ -24,7 +24,7 @@ function commonGetAllProblems(){
     //     appendProblem(problem);
     // });
 
-    fetch('/ideas', {credentials: "same-origin"}) // TODO: endpoint
+    fetch('/problems', {credentials: "same-origin"}) // TODO: endpoint
         .then(function(response) {
             return response.json();
         })
@@ -155,7 +155,7 @@ function submitProblemForm(){
         // New problem:
         // appendProblem({id: m_problems.length, idea: problemText});
 
-        fetch('/idea' , {method: 'PUT', body: problemText, credentials: "same-origin"}) // TODO: endpoint
+        fetch('/problem' , {method: 'PUT', body: problemText, credentials: "same-origin"}) // TODO: endpoint
             .then(function(response) {
                 return response.text();
             })
@@ -171,7 +171,7 @@ function submitProblemForm(){
     }
     else{
         // Editing existing problem:
-        fetch('/idea/' + problemId , {method: 'POST', body: problemText, credentials: "same-origin"}) // TODO: endpoint
+        fetch('/problem/' + problemId , {method: 'POST', body: problemText, credentials: "same-origin"}) // TODO: endpoint
             .then(function(response) {
                 return response.text();
             })
@@ -249,7 +249,7 @@ function OnClickSendPrivateMessageButton(){
 function submitMessageForm(){
     let toUsername = $('#username').val();
     let messageText = $('#message').val();
-    // fetch('/idea' , {method: 'PUT', body: messageText, credentials: "same-origin"}) // TODO: endpoint
+    // fetch('/message' , {method: 'PUT', body: messageText, credentials: "same-origin"}) // TODO: endpoint
     //     .then(function(response) {
     //         return response.text();
     //     })
@@ -267,7 +267,7 @@ function submitMessageForm(){
 }
 
 function getUserDetails(){
-    // fetch('/ideas', {credentials: "same-origin"}) // TODO: endpoint
+    // fetch('/userDetails', {credentials: "same-origin"}) // TODO: endpoint
     //     .then(function(response) {
     //         return response.json();
     //     })
@@ -284,7 +284,7 @@ function getUserDetails(){
 }
 
 function getAllBadges(){
-    // fetch('/ideas', {credentials: "same-origin"}) // TODO: endpoint
+    // fetch('/badges', {credentials: "same-origin"}) // TODO: endpoint
     //     .then(function(response) {
     //         return response.json();
     //     })
@@ -304,7 +304,7 @@ function appendBadge(badge){
 }
 
 function getAllOpenProblems(){
-    // fetch('/ideas', {credentials: "same-origin"}) // TODO: endpoint
+    // fetch('/openProblems', {credentials: "same-origin"}) // TODO: endpoint
     //     .then(function(response) {
     //         return response.json();
     //     })
