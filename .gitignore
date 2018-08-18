@@ -21,8 +21,6 @@ IDC_web/node_modules/
 # ignore OS generated files
 ehthumbs.db
 Thumbs.db
-ideas.db
-
 # ignore Editor files
 *.sublime-project
 *.sublime-workspace
